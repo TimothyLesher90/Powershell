@@ -1,0 +1,359 @@
+####10/13/2020 Added Introduction, Fixed typos
+####10/15/2020 Added cls for option 1
+####10/15/2020 Fixed Typo on option 1
+####10/26/2020 Added explanation to incorrect speeds
+####10/29/2020 Added Voicemail setup
+####11/3/2020 Added another step to document upload, Added explanation to Traceroute and speed requirements
+####11/11/2020 re arrange notes for document upload, Added notes to terminate CCT session
+####11/16/2020 Edit the introduction and added logmein request
+####11/17/2020 Added instructions to add new options.
+####11/30/2020 Added Name variable and jobtitle variable
+
+########------------Before adding a new option copy all and paste in a notepad. ----------###########
+
+# 1: To add a new option to to the menu below and go to the line above quit and enter Write-Host "#: description of note"
+# 2: Go to the bottom above the curly brace and the q and paste lines 15 - 28 the below. Make sure your delete the hashtag. Hashtage are for commenting purpose and does not do anything. 
+# }
+# '#' 
+# {
+# cls
+# 'Description of the note'
+# if($input -eq #)
+#{
+
+###add variables and notes here
+
+
+
+#}
+#########-------------Name and Job title entry ---------------------###########
+Write-Host "*****************************************************" ###Title and looks
+Write-Host "**************** Name and Jobtitle ******************" ###Title and looks
+Write-Host "*****************************************************" ###Title and looks
+
+$agentName = Read-Host "What is your name" #Loads user name in variable for ending notes.
+$jobTitle = Read-Host "What is your Job Title"#loads user job title in variable for user notes. 
+
+#########---------End of Name and Job title entry-------------------------###########
+
+
+#######--------------- Menu pop up ------------------------------#############
+function Show-Menu
+{
+  param(
+    [string] $tool = 'Note Generator'
+)
+#####------------------------menu----------------------------------------------#####
+cls
+Write-Host "*****************************************************" ###Title and looks
+Write-Host "******************* $tool ******************" ###Title and looks
+Write-Host "*****************************************************" ###Title and looks
+
+Write-Host "1: Introduction" ##Introduction
+Write-Host "2: Speed Incorrect." ### Only incorrect speed
+Write-Host "3: Timeouts Tracert." ### Only timeouts note
+Write-Host "4: Speed Incorrect and Timeouts." ### Timouts and speed notes
+Write-Host "5: Correct speeds and No Timeouts." ### Option for user having correct speeds and no time outs
+Write-Host "6: Document upload." ###Option for direction for uploading a document.
+Write-Host "7: Voicemail setup." ### steps on setting up voicemail
+Write-Host "8: Terminate CCT session." ##### steps to terminate CCT session
+Write-Host "9: LogMeIn request." ##### LogmeIn Request
+Write-Host "Q: Quit" ### Option to quit and go back
+}
+#####---------------------------------end of menu-----------------------------------------------------------------####
+
+do
+{
+
+Show-Menu
+$input = Read-Host "Please choose your tool" ## requst user input for the tool they want
+switch ($input)
+{
+'1' ### option for introduction
+{
+cls
+'You chose introduction'
+    if($input -eq 1)
+    {
+$user = Read-Host "What is the User name"
+
+Write-Host "Hello $user :
+
+I was wondering if you still experiencing issues? If so, are available for me to start troubleshooting?
+
+$agentName
+$jobtitle"
+}
+######--------------------------------------------------------------------------------------------######
+}
+'2' ##option for Incorrect Speeds
+{
+cls
+'You chose Incorrect Speed' ##informing user they chose Speed incorrect notes
+    if ($input -eq 2) #### if option 2 Speed incorrect is chosen
+{
+$user = Read-Host "What is the Users Name: "
+$down = Read-Host "Enter Download speed: "
+$up = Read-Host  "Enter Upload speed: "
+$type = Read-Host "Type of connection"
+
+Write-Host ""
+Write-Host ""
+Write-Host ""
+
+Write-Host "Started LogMeIn session"
+Write-Host "User is on $type"
+Write-Host "Ran Speed Test"
+Write-Host "User had a download speed of $down and an upload speed of $up "
+Write-Host "User is not meeting the minimum speed requirements"
+Write-Host "At AmeriSave, we require at least a minimum download of 50.00 MBS and 20.00 MBS upload. I personally recommend higher due to fluctuation."
+Write-Host "Ran a Trace route"
+Write-Host "User had no timeouts tracert "
+Write-Host  ""
+Write-Host "$user, please reach out to your internet provider and increase your speeds to our minimum requirement of at least 50.00 MBS download and a 20.00 MBS upload.
+
+To better understand, With speeds below the minimum requirements, you are encountering issues with lag on the remote server or poor call quality. To break this down  think of a  highway between two cities (the user and the Amerisave servers). If the highway does not have enough lanes (download/upload speed), it will result in congestion and delays. As internet traffic is a two way communication, both the upload and download speeds need to meet the minimum requirements for the round trip to go smoothly. "
+}
+
+######--------------------------------------------------------------------------------------------######
+}
+'3' ## Option for user having timeouts only
+{
+cls
+'You chose Timeouts only' ### Informing user that they chose  timeout only notes.
+if ($input -eq 3)
+{
+$user = Read-Host "Whatis the Users Name: "
+$down = Read-Host "Enter Download speed: "
+$up = Read-Host  "Enter Upload speed: "
+$tracert = Read-Host "Enter tracert timeouts"
+$type = Read-Host "Type of connection"
+
+Write-Host ""
+Write-Host ""
+Write-Host ""
+
+Write-Host "Started LogMeIn session"
+Write-Host "User is on $type"
+Write-Host "Ran Speed Test"
+Write-Host "User had a download speed of $down and an upload speed of $up "
+Write-Host "User is meeting the minimum speed requirements"
+Write-Host "Ran a Trace route"
+Write-Host "User had timeouts on Hop $tracert "
+Write-Host  ""
+Write-Host "$user, please reach out to your internet provider and let them know you have timeouts in your trace route to our server. I will email you your test results and show them the image so they know where it is timing out at. 
+
+To better understand a trace route
+
+A trace route traces the connections (hops) between your computer and the final destination (AmeriSave remote servers in this instance). You can think of this as your data taking a trip across the country and passing through various locations. If the data incurs any delays or roadblocks along the route, it will be denoted by an asterisk listed in the trace route(hops $tracert); this will result in lag (typically presented as lag/delay in call audio or decreased RDP performance). The asterisks displayed in the network test illustrates any delays along the route. The last few hops are showing where the trace route hits the Amerisave servers. 
+You can think of this as your data taking a car ride across the US. When your date encounters busy routes, it may stop or pause due to delays, or be forced to take another route.
+
+
+RDP (Remote Desktop) and VOIP (Bria) traffic require a very stable, consistent connection to provide an enjoyable remote experience, and any moderate packet loss, or hops timing out along the data route, will cause inconsistencies in the connection and result is sub-par performance. Thank you  "
+}
+######--------------------------------------------------------------------------------------------######
+
+}
+'4' ### Opeion 3 for informing user they chose incorrect speeds and timeouts
+{
+cls
+'You incorrect Speed and timeouts in tracert'### informing user they chose incorrect speeds and timeouts
+       
+if ($input -eq 4)
+
+{
+$user = Read-Host "Whatis the Users Name: "
+$down = Read-Host "Enter Download speed: "
+$up = Read-Host  "Enter Upload speed: "
+$tracert = Read-Host "Enter tracert timeouts"
+$type = Read-Host "Type of connection"
+
+Write-Host ""
+Write-Host ""
+Write-Host ""
+
+Write-Host "Started LogMeIn session"
+Write-Host "User is on $type"
+Write-Host "Ran Speed Test"
+Write-Host "User had a download speed of $down and an upload speed of $up "
+Write-Host "User is not meeting the minimum requirements for speed, We require at least a 50.00 MBS down and a 20.00 MBS up. I personally recommend higher due to fluctuation"
+Write-Host "Ran a Trace route"
+Write-Host "User had timeouts on Hop $tracert "
+Write-Host  ""
+Write-Host "$user, please reach out to your internet provider and increase your internet speeds to at least 50.00 MBS download and a 20.00 MBS upload. Let them know as well that you have timeouts in your trace route to our server. I will email you your test results and show them the image so they know where it is timing out at. Thank you 
+
+To better understand low speeds:
+
+With speeds below the minimum requirements, you are encountering issues with lag on the remote server or poor call quality. To break this down  think of a  highway between two cities (the user and the Amerisave servers). If the highway does not have enough lanes (download/upload speed), it will result in congestion and delays. As internet traffic is a two way communication, both the upload and download speeds need to meet the minimum requirements for the round trip to go smoothly.
+
+To better understand a trace route:
+
+A trace route traces the connections (hops) between your computer and the final destination (AmeriSave remote servers in this instance). You can think of this as your data taking a trip across the country and passing through various locations. If the data incurs any delays or roadblocks along the route, it will be denoted by an asterisk listed in the trace route(hops $tracert); this will result in lag (typically presented as lag/delay in call audio or decreased RDP performance). The asterisks displayed in the network test illustrates any delays along the route. The last few hops are showing where the trace route hits the Amerisave servers. 
+You can think of this as your data taking a car ride across the US. When your date encounters busy routes, it may stop or pause due to delays, or be forced to take another route.
+
+
+RDP (Remote Desktop) and VOIP (Bria) traffic require a very stable, consistent connection to provide an enjoyable remote experience, and any moderate packet loss, or hops timing out along the data route, will cause inconsistencies in the connection and result is sub-par performance.  " 
+}
+######--------------------------------------------------------------------------------------------######
+}
+'5' ### Correct speeds and no Timeouts 
+{
+cls
+'Correct speeds and No timeouts' ### Correct speeds and no Timeouts 
+if ($input -eq 5)
+{
+$user = Read-Host "Whatis the Users Name: "
+Write-Host ""
+
+Write-Host "Started a LogMeIn session"
+Write-Host "Ran a Speed Test."
+Write-Host "User speed is above the minimum requirements."
+Write-Host "Ran tracert."
+Write-Host "User has no timeouts in Trace Route"
+Write-Host ""
+Write-Host "$user, Please contact your internet provider and have them add port forwarding to 3389 TCP/UDP. I would make sure you are talking to a tier2 or tier 3 customer service representative. "
+}
+######--------------------------------------------------------------------------------------------######
+}
+'6' ### Upload document notes
+{
+cls
+'How to upload a document' ### Upload document notes
+if ($input -eq 6)
+{
+$user = Read-Host "Whatis the Users Name: "
+Write-Host ""
+
+Write-Host "$user,
+
+Try these steps and please let me know if it uploaded.
+
+Can you go to the file you are trying to upload
+Click file print
+Print as a pdf 
+Rename it X
+try to upload again
+
+Can you go to the email where the document,pdf,etc is
+Save as
+Rename the file x
+Try to upload it again
+
+Can you go to the file you are trying to upload.
+click file and save as.
+rename it to x.
+try to upload it again.
+
+
+
+$agentName
+$jobTitle  "
+}
+######--------------------------------------------------------------------------------------------######
+}
+'7' ### Setting up voicemail
+{
+cls
+'Voicemail setup' 
+if ($input -eq 7)
+{
+$user = Read-Host "What is the users name: "
+$ext = Read-Host " What is the user Extension: "
+
+Write-Host ""
+
+Write-Host "$user,
+Can you dial
+
+555
+Then it will ask for a mailbox which is $ext
+Then it will ask for a password which is $ext
+0
+
+1
+#
+1
+
+2
+#
+1
+
+3
+#
+1
+
+4
+1
+#
+1
+
+And follow the prompts
+
+$agentName
+$jobTitle" 
+}
+#####----------------------------------------------------------------------------------####
+}
+'8' ### Terminating CCT session
+{
+cls
+'Terminate CCT session' 
+if ($input -eq 8)
+{
+$User = read-host "What is the users name: "
+
+"Hello $user :
+
+Can you go to your CCT page
+In the top right corner you will see a hyperlink (blue text) that say terminate this session
+Click 'Terminate' on the call center page. hit 'ok' on the prompt that follows. 
+Immediately hit CTRL+F5 to reset the call center page. 
+Sign out of Bria/Softphone via the Softphone tab in the top left of the application. Sign back in  
+
+$agentName
+$jobTitle"
+}
+####---------------------------------------### 
+}
+'9' ### LogMeIn Request
+{
+cls
+'LogMeIn Request' 
+if ($input -eq 9)
+{
+$User = read-host "What is the users name:"
+$pin = read-host "What is the Pin: "
+
+"Hello $user :
+
+I'm going to connect to your computer to diagnose the problem.
+
+Start by minimizing or exiting the remote server and opening up a web browser and enter: logmein123.com
+
+Please Accept/Allow/Run any prompts you may receive during this process.
+
+If this is an AmeriSave PC, please move the prompt that pop up and ask for access, there should be another prompt for you to hit allow access
+
+
+Then enter the PIN: $pin
+
+
+$agentName
+$jobTitle"
+}      
+#########--------------########      
+}
+'q' ##option to quit and go back
+{
+return ### returning to main directory
+}
+
+
+}
+pause
+}
+
+until ($input-eq 'q') ### doesnt go back until q is inputed
+
+
+ 
